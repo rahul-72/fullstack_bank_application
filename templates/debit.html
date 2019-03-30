@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block center %}
+<div>
+    <form action="/debit_amount/" method="POST">
+        <p>Amount: <input type="number" name="amount"
+            placeholder="Rs 2000" required> </p>
+    </form>
+</div>
+
+
+{% endblock %}

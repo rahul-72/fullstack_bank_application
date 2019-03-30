@@ -1,0 +1,31 @@
+{% extends('base.html') %}
+
+{% block center %}
+
+<!-- Here we are creating 4 buttons with anchor tag.
+Which will lead to debit, credit, check balance and account,
+logout-->
+<h1 style="color:darkolivegreen">
+Welcome {{data.name}} to XYZ Bank</h1> 
+<p>
+    <button id="button_debit">
+        <a href="/debit/" > Debit </a>
+    </button>
+</p>
+<p>
+    <button id="button_credit">
+        <a href="/credit/"> Credit </a>
+    </button>
+</p>
+<p>
+    <button id="button_bal">
+        <a href="/balance_account/"> Check Balance and Account
+        number </a>
+    </button>
+</p>
+    <button id="button_logout">
+        <a href="/logout/"> Logout </a>
+    </button>
+</p>
+
+{% endblock %}

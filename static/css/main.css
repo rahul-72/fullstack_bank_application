@@ -47,4 +47,14 @@ body {
     color: white;
 }
 
-
+#login_form{
+    border-style: solid;
+    border-color: darkolivegreen;
+    border-width: 5px;
+    padding-top: 10%;
+    
+}
+#button_debit{
+    width: 125px;
+    height: 30px;
+}

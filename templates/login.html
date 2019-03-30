@@ -5,13 +5,17 @@
 <!-- Here we are creating 4 buttons with anchor tag.
 Which will lead to debit, credit, check balance and account,
 logout-->
+
 <h1 style="color:darkolivegreen">
 Welcome {{data.name}} to XYZ Bank</h1> 
+<form action="/debit/" method="POST">
+    balance={{data.bal}}
 <p>
     <button id="button_debit">
-        <a href="/debit/" > Debit </a>
+        <a href="/debit/"  0> Debit </a>
     </button>
 </p>
+</form>
 <p>
     <button id="button_credit">
         <a href="/credit/"> Credit </a>

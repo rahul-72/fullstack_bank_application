@@ -10,7 +10,6 @@ import json,time,os,sys         #importing useful libraries....
 from random import randint
 from getpass import getpass
 
-
 @app.route('/')
 def index():
     return render_template('index.html', title='XYZ Bank')
@@ -38,13 +37,17 @@ def login():
             
 
                        
-@app.route('/debit/')
+@app.route('/debit/' , methods=['POST'])
 def debit():
-    return render_template('debit.html', title='Debit'data=data)
-@app.route('/debit_amount/')
+    balance=request.form['balance']
+    return render_template('debit.html', title='Debit', balance=balance)
+
+
+@app.route('/debit_amount/', methods=['POST'])
 def debit_amount:
     amount=request.form['amount']
-    if data['bal']>amount:
+    balance=request.form['balance']
+    if balance>amount:
         msg=f'Amount Rs {amount} are debited from your account'
         return render_template('login.html',title='Login',msg=msg)
     else:

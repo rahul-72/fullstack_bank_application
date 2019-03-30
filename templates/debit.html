@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block center %}
+
 <div>
     <form action="/debit_amount/" method="POST">
+        <!--Here I am creating form to take amount as an input.-->
+        balance={{balance}}
         <p>Amount: <input type="number" name="amount"
             placeholder="Rs 2000" required> </p>
     </form>

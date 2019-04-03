@@ -3,12 +3,17 @@
 <html>
 
 <head>
-    <title>{{ title }}</title>
+    <title>{{ title }}</title> <!-- We have to pass value of title -->
+    
     <link rel='stylesheet' type='text/css' href='/static/css/main.css'>
-    {% block head %}
+    <!--Linking main.css file to base.html page-->
 
+    {% block head %}
+    <!--This pattern is used by other html pages to write here.-->
     {% endblock %}
 </head>
+
+
 
 <body>
 
@@ -67,6 +72,7 @@
 
     </div>
 
+    
 </body>
 
 

@@ -1,16 +1,18 @@
 from flask import Flask, render_template, request, session
-import json,time,os,sys     
+import json,time,os,sys,time     
 from random import randint    #importing useful libraries....
 
 """******************************************************************************"""
 
-
+"""Creating app object and app.secret_key="toencryptyoursessiondata" is for session."""
 app=Flask(__name__)
 app.secret_key = "toencryptyoursessiondata"
 
 
 
-current_path=os.getcwd()
+current_path=os.getcwd()  """Always use current path so that this application 
+can run on other laptops also."""
+
 bank_data=os.path.join(current_path,"static/data/bank")
 bank_log_data=os.path.join(current_path,"static/data/bank_log")
 """Setting the path for the bank data and bank_log data."""
@@ -35,6 +37,16 @@ def index():
         f=open(file_name)
         data=json.load(f)
         f.close()
+        
+        f=open(os.path.join(bank_log_data,username))
+        log=json.load(f)
+        f.close()
+        log.append(time.ctime())
+
+        f=open(os.path.join(bank_log_data,username),'r+')
+        json.dump(log,f)
+        f.close()
+
         name=data['first_name'] + ' '+data['last_name']
         return render_template("login.html", title="Login", name=name)
     else:    
@@ -60,6 +72,15 @@ def login():
             data=json.load(f)
             f.close()
             if password== data['password']:
+                f=open(os.path.join(bank_log_data,username))
+                log=json.load(f)
+                f.close()
+                log.append(time.ctime())
+
+                f=open(os.path.join(bank_log_data,username),'r+')
+                json.dump(log,f)
+                f.close()
+
                 session['username']=username
                 name=data['first_name'] + ' ' +data['last_name']
                 return render_template("login.html", title="Login", name=name, username=True)
@@ -221,6 +242,12 @@ def mk_signup():
                 f=open(os.path.join(bank_data,username),'w')
                 json.dump(data,f)
                 f.close()
+
+                log_list=[]
+                f=open(os.path.join(bank_log_data,username),'w')
+                json.dump(log_list,f)
+                f.close()
+
                 error = "Account Sucessfully Created Please Login"
                 return render_template("index.html",title="XYZ Bank",error=error)
             else:

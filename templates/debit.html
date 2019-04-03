@@ -30,16 +30,17 @@
 
 {% endblock %}
 
-
+<!--***********************************************************************************-->
 
 
 {% block center %}
 
 <div>
     <form action="/debit_amount/" method="POST">
-        <!--Here I am creating form to take amount as an input.-->
+        <!--Here I am creating form to take amount as an input.
+        And then flask will go to the '/debit_amount/' route-->
         <p>Amount: <input type="number" name="amount"
-            placeholder="Rs 2000" required> </p>
+            placeholder="2000" required> </p>
         
         <p>
             <input type="submit" value="Submit">

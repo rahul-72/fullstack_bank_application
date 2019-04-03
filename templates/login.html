@@ -3,6 +3,7 @@
 
 
 {% block head %}
+<!--This is our navigation bar which is on the head of website-->
 
 <nav class="navbar navbar-dark bg-primary">
     <!-- Navbar content -->
@@ -31,15 +32,13 @@
 {% endblock %}
 
 
+<!--*****************************************************************************************-->
+
 
 {% block center %}
 
-<!-- Here we are creating 4 buttons with anchor tag.
-Which will lead to debit, credit, check balance and account,
-logout-->
-
-
-
+<!-- Here we are creating 3 buttons with anchor tag.
+Which will lead to debit, credit, check balance and account-->
 
 
 {% if msg %}
@@ -52,7 +51,7 @@ logout-->
 Welcome {{ name }} to XYZ Bank</h1> 
 <p>
     <button id="button_debit">
-        <a href="/debit/"  0> Debit </a>
+        <a href="/debit/"  > Debit </a>
     </button>
 </p>
 

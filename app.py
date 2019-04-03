@@ -35,7 +35,7 @@ def index():
         f=open(file_name)
         data=json.load(f)
         f.close()
-        name=data['first_name'] + data['last_name']
+        name=data['first_name'] + ' '+data['last_name']
         return render_template("login.html", title="Login", name=name)
     else:    
         return render_template('index.html', title='XYZ Bank')
@@ -61,7 +61,7 @@ def login():
             f.close()
             if password== data['password']:
                 session['username']=username
-                name=data['first_name'] + data['last_name']
+                name=data['first_name'] + ' ' +data['last_name']
                 return render_template("login.html", title="Login", name=name, username=True)
             else:
                 error="Invalid Password"
@@ -86,7 +86,7 @@ def debit_amount():
     f=open(os.path.join(bank_data,username))
     data=json.load(f)
     f.close()
-    name=data['first_name'] + data['last_name']
+    name=data['first_name'] + ' '+data['last_name']
 
     if data['balance'] > amount:
         msg= f'Amount Rs {amount} are debited from your account'
@@ -99,7 +99,7 @@ def debit_amount():
 
 
 
-"""       *************************************************************"""
+"""       ***********************************************************************"""
 
 
 
@@ -116,7 +116,7 @@ def credit_amount():
     f=open(os.path.join(bank_data,username))
     data=json.load(f)
     f.close()
-    name=data['first_name'] + data['last_name']
+    name=data['first_name'] + ' '+data['last_name']
 
     data['balance']+=amount
     f=open(os.path.join(bank_data,username),'w')
@@ -126,7 +126,7 @@ def credit_amount():
     return render_template('login.html', title='Login',name=name, msg=msg)
 
 
-"""**********************************************************"""
+"""**************************************************************************"""
 
 
 
@@ -145,7 +145,16 @@ def balance_account():
 
 """*****************************************************************************"""
 
+@app.route('/profile/')
+def profile():
+    username=session["username"]
+    f=open(os.path.join(bank_data,username))
+    data=json.load(f)
+    f.close()
+    return render_template('profile.html', title='Profile', data=data)
 
+
+"""***********************************************************************************""" 
 
 
 @app.route('/logout/')
@@ -155,7 +164,7 @@ def logout():
 
 
 
-"""**********************************************************************************"""
+"""*************************************************************************************"""
 
 
 
@@ -173,6 +182,7 @@ def mk_signup():
         last_name = request.form['last_name']
         password = request.form['password']
         username=request.form['username']
+        phone_number=int(request.form['phone_number'])
         
         if username not in bank_data : 
             """The bank data of a particular user is in this form---->>>>>
@@ -189,7 +199,7 @@ def mk_signup():
                     f=open(os.path.join(bank_data,i))
                     data=json.load(f)
                     f.close()
-                    if data['account_num']==a:  
+                    if data['account_number']==a:  
                         """checking whether a randomly generated account number is already
                           in bank dictionary or not."""
                         break                   
@@ -197,21 +207,25 @@ def mk_signup():
                 else:
                     break
 
-            
-            data = { 
-                'email':email,
-                'first_name':first_name,
-                'last_name':last_name,
-                'password':password,
-                'username':username,
-                'balance':0,
-                'account_number':a
-            }
-            f=open(os.path.join(bank_data,username),'w')
-            json.dump(data,f)
-            f.close()
-            error = "Account Sucessfully Created Please Login"
-            return render_template("index.html",title="XYZ Bank",error=error)
+            if len(str(phone_number))==10:
+                data = { 
+                    'email':email,
+                    'first_name':first_name,
+                    'last_name':last_name,
+                    'password':password,
+                    'username':username,
+                    'balance':0,
+                    'account_number':a,
+                    'phone_number':phone_number
+                }
+                f=open(os.path.join(bank_data,username),'w')
+                json.dump(data,f)
+                f.close()
+                error = "Account Sucessfully Created Please Login"
+                return render_template("index.html",title="XYZ Bank",error=error)
+            else:
+                error="Only Enter 10 Digit Phone Number"
+                return render_template("index.html",title="XYZ Bank",error=error)
         else : 
             error = "User Already Exists... Login into your account"
             return render_template("index.html",title="XYZ Bank",error=error)

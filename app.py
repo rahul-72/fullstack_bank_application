@@ -10,8 +10,9 @@ app.secret_key = "toencryptyoursessiondata"
 
 
 
-current_path=os.getcwd()  """Always use current path so that this application 
-can run on other laptops also."""
+current_path=os.getcwd()  
+"""Always use current path so that this application 
+    can run on other laptops also."""
 
 bank_data=os.path.join(current_path,"static/data/bank")
 bank_log_data=os.path.join(current_path,"static/data/bank_log")
@@ -31,13 +32,13 @@ bank_log_data=os.path.join(current_path,"static/data/bank_log")
 @app.route('/')
 def index():
     if 'username' in session:
-        """If exits then I am opening his file."""
+        """If user exits then I am opening his file."""
         username=session['username']
         file_name=os.path.join(bank_data, username)
         f=open(file_name)
         data=json.load(f)
         f.close()
-        
+        """loading and dumping his log file."""
         f=open(os.path.join(bank_log_data,username))
         log=json.load(f)
         f.close()
@@ -49,6 +50,8 @@ def index():
 
         name=data['first_name'] + ' '+data['last_name']
         return render_template("login.html", title="Login", name=name)
+        """render_template will take login.html file from the template folder."""
+
     else:    
         return render_template('index.html', title='XYZ Bank')
 
@@ -66,7 +69,7 @@ def login():
     password=request.form["password"]
     for user in os.listdir(bank_data):
         """By this for loop I will get a list which contains
-        name of file."""
+        name of files."""
         if username==user:
             f=open(os.path.join(bank_data,username))
             data=json.load(f)
@@ -80,8 +83,9 @@ def login():
                 f=open(os.path.join(bank_log_data,username),'r+')
                 json.dump(log,f)
                 f.close()
-
-                session['username']=username
+                
+                session['username']=username 
+                """This is how we use session"""
                 name=data['first_name'] + ' ' +data['last_name']
                 return render_template("login.html", title="Login", name=name, username=True)
             else:
@@ -229,6 +233,7 @@ def mk_signup():
                     break
 
             if len(str(phone_number))==10:
+                """cheaking whether phone number is of 10 digits or not."""
                 data = { 
                     'email':email,
                     'first_name':first_name,
@@ -239,6 +244,7 @@ def mk_signup():
                     'account_number':a,
                     'phone_number':phone_number
                 }
+                """creating dictionary and dumping it ."""
                 f=open(os.path.join(bank_data,username),'w')
                 json.dump(data,f)
                 f.close()
@@ -270,3 +276,4 @@ def mk_signup():
 
 if __name__=="__main__":
     app.run('localhost',5000,debug=True)
+    """running it on localhost. One can run it on other host also."""

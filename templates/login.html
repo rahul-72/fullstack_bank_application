@@ -1,32 +1,73 @@
 {% extends('base.html') %}
 
+
+
+{% block head %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" >Menu</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        
+      </ul>
+    </div>
+
+    <a href="/logout/" class="navbar-brand pull-right"><strong>Logout</strong></a>
+  </nav>
+
+
+
+  
+
+{% endblock %}
+
 {% block center %}
 
 <!-- Here we are creating 4 buttons with anchor tag.
 Which will lead to debit, credit, check balance and account,
 logout-->
 
+
+
+
+
+{% if msg %}
+<h1 style="color:red" > {{msg}} </h1>
+{% endif %}
+
+
+
 <h1 style="color:darkolivegreen">
-Welcome {{data.name}} to XYZ Bank</h1> 
-<form action="/debit/" method="POST">
-    balance={{data.bal}}
+Welcome {{ name }} to XYZ Bank</h1> 
 <p>
     <button id="button_debit">
         <a href="/debit/"  0> Debit </a>
     </button>
 </p>
-</form>
+
 <p>
     <button id="button_credit">
         <a href="/credit/"> Credit </a>
     </button>
 </p>
+
 <p>
     <button id="button_bal">
         <a href="/balance_account/"> Check Balance and Account
         number </a>
     </button>
 </p>
+
+
+<a href="logout.php" class="navbar-brand pull-right"><strong>Logout</strong></a>
+
+<p>
     <button id="button_logout">
         <a href="/logout/"> Logout </a>
     </button>

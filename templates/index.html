@@ -1,30 +1,22 @@
-{% extends "base.html" %}
+{% extends "base.html" %}  
+<!-- I am importing the base template here.-->
 
 
-{% block left %}
-<!--Here I am inserting 2 images on left side.-->
-<img src="static/image/bank1.jpg" alt="Bank Image" width="400" height="300 ">
-<img src="static/image/bank2.jpg" alt="Bank Image" width="300" height="300 " >
-{% endblock %}
-
-
-{% block right %}
-<!--Here I am inserting 1 vedio on right side.-->
-<video width="360" height="240" controls>
-    <source src="static/video/piggy.mp4" type="video/mp4">
-    Your broswer does not support the video tag.    
-</video>
-{% endblock %}
 
 {% block center %}
 <!--It will show a message if there is wrong username and 
-    password-->
+    password--> 
+
 {% if error %}
 <h1 style="color:red"> {{error}} </h1>
 {% endif %}
+
+
 <!--I am creating form to take input for username and password-->
 <div id="login_form"> <!--Here id will be used in main.css file-->
     <form action="/login/" method="POST">
+        <!--- After clicking the login buttom the flask will 
+        go the "/login/" route.-->
         <p>Username: <input type="text" name="username" 
         placeholder="eg rahul123" required> </p>
         <p>Password: <input type="password" name="password"
@@ -34,6 +26,8 @@
         &nbsp; &nbsp; &nbsp; &nbsp;
         <button >
             <a href="/signup/" id="button"> Signup </a>
+            <!--- After clicking singup buttom flask will go to 
+            "/signup/" route.-->
         </button>
         </p>
     </form>

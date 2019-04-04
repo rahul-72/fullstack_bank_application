@@ -49,6 +49,7 @@ def index():
         f.close()
 
         name=data['first_name'] + ' '+data['last_name']
+        name=name.title()
         return render_template("login.html", title="Login", name=name)
         """render_template will take login.html file from the template folder."""
 
@@ -87,6 +88,7 @@ def login():
                 session['username']=username 
                 """This is how we use session"""
                 name=data['first_name'] + ' ' +data['last_name']
+                name=name.title()
                 return render_template("login.html", title="Login", name=name, username=True)
             else:
                 error="Invalid Password"
@@ -112,6 +114,7 @@ def debit_amount():
     data=json.load(f)
     f.close()
     name=data['first_name'] + ' '+data['last_name']
+    name=name.title()
 
     if data['balance'] > amount:
         msg= f'Amount Rs {amount} are debited from your account'
@@ -142,6 +145,7 @@ def credit_amount():
     data=json.load(f)
     f.close()
     name=data['first_name'] + ' '+data['last_name']
+    name=name.title()
 
     data['balance']+=amount
     f=open(os.path.join(bank_data,username),'w')
@@ -176,7 +180,10 @@ def profile():
     f=open(os.path.join(bank_data,username))
     data=json.load(f)
     f.close()
-    return render_template('profile.html', title='Profile', data=data)
+    name=data['first_name'] + ' '+data['last_name']
+    name=name.title()
+    
+    return render_template('profile.html', title='Profile', data=data, name=name)
 
 
 """***********************************************************************************""" 

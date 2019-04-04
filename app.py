@@ -217,57 +217,65 @@ def mk_signup():
 "account_number": "1001", "username":"rahul123", 
 "password": "rahul456", "email":"charan7rahul@gmail.com"}  """
             if len(password)>=8:
-            #checkinh whether password of length 8 or more or not.
-                while True:
-                    q,w,e,r,t,y,u,i,o,p,l=map(str,[randint(0,9) for i in range(11)])
-                    """Assigning 11 random number to update
-                    account-number in dictionary."""
-                    a=q+w+e+r+t+y+u+i+o+p+l
-                    for i in os.listdir(bank_data):
-                        f=open(os.path.join(bank_data,i))
-                        data=json.load(f)
+            #checking whether password of length 8 or more or not.
+
+                if password==verify_password:
+                    #verifing password.
+
+                    while True:
+                        q,w,e,r,t,y,u,i,o,p,l=map(str,[randint(0,9) for i in range(11)])
+                        """Assigning 11 random number to update
+                        account-number in dictionary."""
+                        a=q+w+e+r+t+y+u+i+o+p+l
+                        for i in os.listdir(bank_data):
+                            f=open(os.path.join(bank_data,i))
+                            data=json.load(f)
+                            f.close()
+                            if data['account_number']==a:  
+                                """checking whether a randomly generated account number is already
+                                in bank dictionary or not."""
+                                break                   
+                            continue
+                        else:
+                            break
+
+
+
+                    if len(str(phone_number))==10:
+                        """cheaking whether phone number is of 10 digits or not."""
+                        data = { 
+                            'email':email,
+                            'first_name':first_name,
+                            'last_name':last_name,
+                            'password':password,
+                            'username':username,
+                            'balance':0,
+                            'account_number':a,
+                            'phone_number':phone_number
+                        }
+                        """creating dictionary and dumping it ."""
+                        f=open(os.path.join(bank_data,username),'w')
+                        json.dump(data,f)
                         f.close()
-                        if data['account_number']==a:  
-                            """checking whether a randomly generated account number is already
-                            in bank dictionary or not."""
-                            break                   
-                        continue
+
+                        log_list=[]
+                        f=open(os.path.join(bank_log_data,username),'w')
+                        json.dump(log_list,f)
+                        f.close()
+
+                        error = "Account Sucessfully Created Please Login"
+                        return render_template("index.html",title="XYZ Bank",error=error)
                     else:
-                        break
+                        error="Only Enter 10 Digit Phone Number"
+                        return render_template("index.html",title="XYZ Bank",error=error)
 
-
-
-                if len(str(phone_number))==10:
-                    """cheaking whether phone number is of 10 digits or not."""
-                    data = { 
-                        'email':email,
-                        'first_name':first_name,
-                        'last_name':last_name,
-                        'password':password,
-                        'username':username,
-                        'balance':0,
-                        'account_number':a,
-                        'phone_number':phone_number
-                    }
-                    """creating dictionary and dumping it ."""
-                    f=open(os.path.join(bank_data,username),'w')
-                    json.dump(data,f)
-                    f.close()
-
-                    log_list=[]
-                    f=open(os.path.join(bank_log_data,username),'w')
-                    json.dump(log_list,f)
-                    f.close()
-
-                    error = "Account Sucessfully Created Please Login"
-                    return render_template("index.html",title="XYZ Bank",error=error)
                 else:
-                    error="Only Enter 10 Digit Phone Number"
-                    return render_template("index.html",title="XYZ Bank",error=error)
+                    error="Password Verification is Failed."
+                    return render_template('signup.html', title='signup', error=error)        
 
             else:
-                error="Enter password of length 8 or more"
-                return render_template('signup.html', title=Signup, error=error)
+                error="Enter Password of Length 8 or more"
+                return render_template('signup.html', title='Signup', error=error)
         else : 
             error = "User Already Exists... Login into your account"
             return render_template("index.html",title="XYZ Bank",error=error)

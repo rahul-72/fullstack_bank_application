@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
 
-{% if error %}
-<h1 style="color:red">
-{{error}} 
-  </h1>
-{% endif %}
 
 
 {% block center %}
+
+
+
+{% if error %}
+<h1 style="color:red">
+        {{error}} 
+</h1>
+{% endif %}
 
 <div id='form'>
     <form method="POST" action="/mk_signup/">
